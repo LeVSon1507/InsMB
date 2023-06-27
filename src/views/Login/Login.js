@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import {Linking} from 'react-native';
 import {TextInput} from 'react-native-paper';
-import axios from 'axios';
+
 import Container from '../../components/Container/Container';
 import Content from '../../components/Content/Content';
 
@@ -16,29 +16,28 @@ const Login = ({navigation}) => {
 
   const [name, setName] = useState(null);
   const [password, setPassword] = useState(null);
+  // const callApi = async () => {
+  //   try {
+  //     const data = await axios.post('http://localhost:3003/v1/user/login', {
+  //       name,
+  //       password,
+  //     });
+  //     handleCheckLogin(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const callApi = async () => {
-    try {
-      const data = await axios.post('http://localhost:3003/v1/user/login', {
-        name,
-        password,
-      });
-      handleCheckLogin(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleCheckLogin = data => {
-    if (data?.message === 'oke!') {
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'BottomTab'}],
-      });
-    } else {
-      Alert.alert('Sai tên đăng nhập hoặc mật khẩu');
-    }
-  };
+  // const handleCheckLogin = data => {
+  //   if (data?.message === 'oke!') {
+  //     navigation.reset({
+  //       index: 0,
+  //       routes: [{name: 'BottomTab'}],
+  //     });
+  //   } else {
+  //     Alert.alert('Sai tên đăng nhập hoặc mật khẩu');
+  //   }
+  // };
 
   return (
     <Container insets={{top: true, bottom: true}}>
@@ -91,7 +90,14 @@ const Login = ({navigation}) => {
               }
             />
             <TouchableOpacity
-              onPress={() => callApi()}
+              onPress={() => {
+                trueEmail === name && truePassword === password
+                  ? navigation.reset({
+                      index: 0,
+                      routes: [{name: 'BottomTab'}],
+                    })
+                  : Alert.alert('Sai tên đăng nhập hoặc mật khẩu');
+              }}
               style={styles.login}
               disabled={name === null && password === null ? true : false}>
               <Text style={styles.loginText}>Đăng Nhập</Text>

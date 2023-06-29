@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const categorySchema = new mongoose.Schema(
   {
-    id: Ơ,
+    id: String,
     name: String,
     isCircle: String,
   },
